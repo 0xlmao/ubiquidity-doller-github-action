@@ -39,7 +39,7 @@ jobs:
         run: cd contracts/ubiquistick && yarn install
 
       - name: Building nft
-        run: yarn build
+        run: cd contracts/ubiquistick && yarn build
 
       - name: Installing dollar
         run: cd ../dollar && yarn install
