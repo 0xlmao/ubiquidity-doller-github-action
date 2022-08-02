@@ -34,6 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: sudo apt -y install libusb-1.0-0-dev libudev-dev
+        run: yarn install
 
       - name: Setup environment
         run: yarn install:env
@@ -43,9 +44,6 @@ jobs:
 
       - name: Build contracts
         run: yarn build:contracts
-
-      - name: Installing UI
-        run: yarn install
 
       - name: Building UI
         run: yarn BUILD:NEXT
