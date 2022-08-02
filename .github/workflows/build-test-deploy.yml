@@ -48,4 +48,4 @@ jobs:
         run: yarn install
 
       - name: Building UI
-        run: yarn build && yarn build:ui
+        run: yarn BUILD:NEXT
