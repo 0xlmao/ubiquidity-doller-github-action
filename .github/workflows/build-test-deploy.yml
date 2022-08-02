@@ -36,13 +36,13 @@ jobs:
         run: sudo apt -y install libusb-1.0-0-dev libudev-dev
 
       - name: Setup environment
-        run: cp .env.example .env
+        run: yarn install:env
 
-      - name: Installing and Building nft
-        run: cd contracts/ubiquistick && yarn install && yarn build
+      - name: Install contracts
+        run: yarn install:contracts
 
-      - name: Installing and Building dollar
-        run: cd contracts/dollar && yarn install && yarn build
+      - name: Build contracts
+        run: yarn build:contracts
 
       - name: Installing UI
         run: yarn install
