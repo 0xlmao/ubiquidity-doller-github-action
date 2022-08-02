@@ -1,4 +1,3 @@
 [build]
-base = "./"
-publish = "./web/dapp"
+publish = "web/dapp"
 command = "yarn build:fleek"
