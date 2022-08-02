@@ -38,17 +38,11 @@ jobs:
       - name: Setup environment
         run: cp .env.example .env
 
-      - name: Installing nft
-        run: cd contracts/ubiquistick && yarn install
+      - name: Installing and Building nft
+        run: cd contracts/ubiquistick && yarn install && yarn build
 
-      - name: Building nft
-        run: cd contracts/ubiquistick && yarn build
-
-      - name: Installing dollar
-        run: cd contracts/dollar && yarn install
-
-      - name: Building dollar
-        run: cd contracts/dollar && yarn build
+      - name: Installing and Building dollar
+        run: cd contracts/dollar && yarn install && yarn build
 
       - name: Installing UI
         run: yarn install
