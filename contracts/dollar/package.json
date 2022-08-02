@@ -16,7 +16,7 @@
     "clean": "hardhat clean",
     "build": "TS_NODE_TRANSPILE_ONLY=1 npx hardhat compile",
     "test": "hardhat test",
-    "test:coverage": "hardhat coverage",
+    "test:coverage": "hardhat coverage --solcoverjs",
     "lint": "run-s lint:* build",
     "lint:sol": "solhint 'contracts/**/*.sol' --fix",
     "lint:eslint": "eslint . --ext js,ts --fix",

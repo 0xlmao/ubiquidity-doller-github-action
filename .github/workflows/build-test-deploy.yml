@@ -20,6 +20,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     permissions:
       contents: read
 
@@ -50,8 +51,11 @@ jobs:
       - name: Building UI
         run: yarn BUILD:NEXT
 
-      - name: Yarn test
-        run: yarn test:all
+      # - name: Yarn test
+      #   run: yarn test:all
 
-      - name: Yarn lint
-        run: yarn lint:all
+      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        run: |
+          netlify link --id ${{ secrets.NETLIFY_SITE_ID }}
+          netlify deploy --prod --build
