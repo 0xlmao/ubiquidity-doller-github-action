@@ -33,7 +33,7 @@ jobs:
           node-version: "16"
 
       - name: Install dependencies
-        run: sudo apt -y install git wget libncurses-dev flex bison gperf python python-pip python-setuptools python-serial python-click python-cryptography python-future python-pyparsing python-pyelftools cmake ninja-build ccache  libusb-1.0
+        run: sudo apt -y install libusb-1.0
 
       - name: Installing nft
         run: cd contracts/ubiquistick && yarn install
