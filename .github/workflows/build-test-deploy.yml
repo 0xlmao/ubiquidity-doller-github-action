@@ -20,7 +20,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     permissions:
       contents: read
 
