@@ -35,17 +35,20 @@ jobs:
       - name: Install dependencies
         run: sudo apt -y install libusb-1.0-0-dev libudev-dev
 
+      - name: Setup environment
+        run: cp .env.example .env
+
       - name: Installing nft
         run: cd contracts/ubiquistick && yarn install
 
       - name: Building nft
-        run: cp .env.example .env && cd contracts/ubiquistick && yarn build
+        run: cd contracts/ubiquistick && yarn build
 
       - name: Installing dollar
-        run: cd ../dollar && yarn install
+        run: cd contracts/dollar && yarn install
 
       - name: Building dollar
-        run: yarn build
+        run: cd contracts/dollar && yarn build
 
       - name: Installing UI
         run: yarn install
