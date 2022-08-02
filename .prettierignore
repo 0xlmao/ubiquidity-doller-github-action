@@ -1,0 +1,10 @@
+# doesn't seem to work
+!contracts/*/deployments/mainnet/
+#
+.next/
+contracts/*/artifacts/
+contracts/*/cache/
+contracts/*/deployments/
+contracts/*/types/
+
+fixtures/

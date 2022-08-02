@@ -1,0 +1,90 @@
+{
+  "name": "@ubiquity/dollar",
+  "license": "MIT",
+  "scripts": {
+    "__test:watch:ci": "nodemon",
+    "build:fleek": "run-s install:env install:contracts BUILD:NEXT",
+    "install:env": "cp .env.example .env",
+    "install:contracts": "run-s _contracts:install:* build:contracts",
+    "_contracts:install": "run-p _contracts:install:*",
+    "_contracts:install:dollar": "cd ./contracts/dollar && yarn",
+    "_contracts:install:nft": "cd ./contracts/ubiquistick && yarn",
+    "build:contracts": "run-s _contracts:build:contracts _contracts:build:artifacts _contracts:build:typechain _contracts:build:summary",
+    "_contracts:build:typechain": "typechain --target=ethers-v5 --out-dir ./fixtures/abi/types ./fixtures/abi/*.json",
+    "_contracts:build:contracts": "run-p _contracts:build:contracts:*",
+    "_contracts:build:contracts:nft": "cd ./contracts/ubiquistick && yarn build",
+    "_contracts:build:contracts:dollar": "cd ./contracts/dollar && yarn build",
+    "_contracts:build:artifacts": "run-p _contracts:build:artifacts:*",
+    "_contracts:build:artifacts:nft": "./utils/build-artifacts.sh ./contracts/ubiquistick",
+    "_contracts:build:artifacts:dollar": "./utils/build-artifacts.sh ./contracts/dollar",
+    "_contracts:build:summary": "node ./utils/generate_contracts_addresses.js",
+    "format": "run-p _format:*",
+    "_format:prettier": "prettier --write .",
+    "_format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
+    "BUILD:NEXT": "next build && next export --outdir web/dapp"
+  },
+  "_scripts": {
+    "start": "run-s install:env install:contracts dev",
+    "start:headless": "run-s install:env install:contracts dev:contracts",
+    "build": "run-s build:*",
+    "build:ui": "yarn next build",
+    "dev": "run-p dev:*",
+    "dev:contracts": "./utils/dev-chain-init.sh",
+    "dev:ui": "next dev",
+    "_contracts:clean": "run-p _contracts:clean:*",
+    "_contracts:clean:dollar": "cd ./contracts/dollar && yarn clean",
+    "_contracts:clean:nft": "cd ./contracts/ubiquistick && yarn clean",
+    "contracts:run:nft": "cd ./contracts/ubiquistick && hardhat node --hostname 0.0.0.0 --fork-block-number 14800000",
+    "contracts:run:faucet": "cd ./contracts/dollar && yarn node:faucet",
+    "prepare": "husky install",
+    "killscript": "kill `ps | grep dev-chain-init.sh | grep -v grep | awk '{ print $1 }'`",
+    "__format:cspell": "cspell '**'"
+  },
+  "devDependencies": {
+    "@ethersproject/providers": "^5.0.0",
+    "@types/react": "^17.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-tsc": "^2.0.0",
+    "nodemon": "^2.0.7",
+    "prettier": "2.2.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@tippyjs/react": "^4.2.5",
+    "@typechain/ethers-v5": "^10.1.0",
+    "autoprefixer": "^10.4.8",
+    "classnames": "^2.3.1",
+    "ethers": "^5.5.4",
+    "hardhat": "^2.10.1",
+    "next": "^11.0.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-error-boundary": "^3.1.4",
+    "tailwindcss": "^3.1.7",
+    "typechain": "^8.1.0"
+  },
+  "nodemonConfig": {
+    "events": {
+      "config": "",
+      "exit": "",
+      "crash": "",
+      "restart": "clear && printf '\\033[3J'",
+      "start": "clear && printf '\\033[3J'"
+    },
+    "verbose": true,
+    "ignore": [
+      "**/*.json",
+      "fixtures/**",
+      "contracts/*/types/**",
+      "**/*/cache/",
+      "**/*/artifacts/"
+    ],
+    "ext": "ts,sh",
+    "exec": "yarn build:fleek"
+  }
+}
