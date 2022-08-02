@@ -3,11 +3,13 @@ name: Workflow for Ubiquity
 on:
   push:
     branches:
+      - main
       - development
       - staging
       - production
   pull_request:
     branches:
+      - main
       - development
       - staging
       - production
