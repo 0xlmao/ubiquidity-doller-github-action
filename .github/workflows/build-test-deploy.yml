@@ -33,7 +33,7 @@ jobs:
           node-version: "16"
 
       - name: Install dependencies
-        run: sudo apt -y install libusb-1.0.pc
+        run: sudo apt -y install libusb-1.0-0-dev
 
       - name: Installing nft
         run: cd contracts/ubiquistick && yarn install
