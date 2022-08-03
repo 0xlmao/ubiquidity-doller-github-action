@@ -55,7 +55,7 @@ jobs:
 
       - name: Save PR number
         run: |
-          mkdir -p ./pr
+          mkdir -p ./pr-${{github-actor}}
           echo ${{ github.event.number }} > ./pr/NR
       - uses: actions/upload-artifact@v2
         with:
