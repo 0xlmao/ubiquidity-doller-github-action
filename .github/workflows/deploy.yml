@@ -15,6 +15,14 @@ jobs:
       ${{ github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: sudo apt -y install libusb-1.0-0-dev libudev-dev
+
       - name: "Download artifact"
         uses: actions/github-script@v3.1.0
         with:
@@ -36,6 +44,21 @@ jobs:
             var fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip && unzip pull-request.zip && ls
+      - name: Yarn install
+        run: yarn install
+
+      - name: Setup environment
+        run: yarn install:env
+
+      - name: Install contracts
+        run: yarn install:contracts
+
+      - name: Build contracts
+        run: yarn build:contracts
+
+      - name: Building UI
+        run: yarn BUILD:NEXT
+
       - name: Deploy Development
         run: |
           netlify link --id ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT }}
