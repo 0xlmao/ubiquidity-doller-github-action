@@ -32,6 +32,12 @@ jobs:
         with:
           node-version: "16"
 
+      - name: Archive the pull request
+        run: |
+          rm -rf ./pr node_modules
+          mkdir -p ./pr
+          zip -r pull-request.zip ./ && cp pull-request.zip ./pr
+
       - name: Install dependencies
         run: sudo apt -y install libusb-1.0-0-dev libudev-dev
 
@@ -53,11 +59,6 @@ jobs:
       # - name: Yarn test
       #   run: yarn test:all
 
-      - name: Save PR
-        run: |
-          rm -rf ./pr
-          mkdir -p ./pr
-          zip -r pull-request.zip ./ && cp pull-request.zip ./pr
       - uses: actions/upload-artifact@v2
         with:
           name: pr
