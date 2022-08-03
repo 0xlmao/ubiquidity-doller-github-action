@@ -50,9 +50,6 @@ jobs:
       - name: Building UI
         run: yarn BUILD:NEXT
 
-      # - name: Yarn test
-      #   run: yarn test:all
-
       - name: Zip build directory
         run: |
           mkdir -p ./pr
