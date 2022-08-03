@@ -38,21 +38,14 @@ jobs:
       - name: Extract files
         run: unzip pr.zip && unzip pull-request.zip && rm pr.zip pull-request.zip
 
-      - name: Deploy Development
-        run: |
-          netlify link --id ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT }}
-          netlify deploy --prod
+        # - name: Deploy Development
+        #   run: |
+        #     netlify link --id ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT }}
+        #     netlify deploy --prod
 
-      - name: Comment on PR
-        uses: actions/github-script@v3
+      -name: Deploy to preview mode
+        uses: thundermiracle/netlify-deploy@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            var fs = require('fs');
-            var issue_number = Number(fs.readFileSync('./NR'));
-            await github.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: 'Everything is OK. Thank you for the PR!'
-            });
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN}}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT}}
+          deploy-dir: "./"
