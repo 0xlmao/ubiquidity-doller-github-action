@@ -53,11 +53,11 @@ jobs:
       # - name: Yarn test
       #   run: yarn test:all
 
-      # - name: Save PR
-      #   run: |
-      #     rm -rf ./pr
-      #     mkdir -p ./pr
-      #     cp -R ./ ./pr
+      - name: Save PR
+        run: |
+          rm -rf ./pr
+          mkdir -p ./pr
+          zip -r pull-request.zip ./ && cp pull-request.zip ./pr
       - uses: actions/upload-artifact@v2
         with:
           name: pr
