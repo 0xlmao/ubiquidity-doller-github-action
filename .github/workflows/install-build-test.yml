@@ -53,7 +53,7 @@ jobs:
       # - name: Yarn test
       #   run: yarn test:all
 
-      - name: Upload build directory
+      - name: Zip build directory
         run: |
           mkdir -p ./pr
           zip -r pull-request.zip ./web/dapp && cp pull-request.zip ./pr
