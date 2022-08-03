@@ -2,9 +2,7 @@
 package = "@netlify/plugin-nextjs"
 
 [build]
-publish = "web/dapp"
-command = "yarn build:fleek"
-
+publish = "./"
 
 [context.development.environment]
 NETLIFY_NEXT_PLUGIN_SKIP = "true"
