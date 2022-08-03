@@ -1,4 +1,4 @@
-name: Received PR and Deploy for Ubiquidity
+name: Received PR and Deploy for Ubiquity
 
 on:
   workflow_run:
@@ -36,11 +36,23 @@ jobs:
             var fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - name: Extract files
-        run: unzip pr.zip && unzip pull-request.zip && ls
+        run: unzip pr.zip && unzip pull-request.zip && rm pr.zip pull-request.zip
 
       - name: Deploy Development
         run: |
           netlify link --id ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT }}
           netlify deploy --prod
-    outputs:
-      json: ${{ steps.meta.outputs.json }}
+
+      - name: Comment on PR
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            var fs = require('fs');
+            var issue_number = Number(fs.readFileSync('./NR'));
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: 'Everything is OK. Thank you for the PR!'
+            });

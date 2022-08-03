@@ -1,4 +1,4 @@
-name: Build and Test Workflow for Ubiquidity
+name: Build and Test Workflow for Ubiquity
 
 on:
   push:
@@ -56,6 +56,7 @@ jobs:
       - name: Zip build directory
         run: |
           mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
           zip -r pull-request.zip ./web/dapp && cp pull-request.zip ./pr
 
       - uses: actions/upload-artifact@v2
