@@ -43,7 +43,7 @@ jobs:
         #     netlify link --id ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT }}
         #     netlify deploy --prod
 
-      -name: Deploy to preview mode
+      - name: Deploy to preview mode
         uses: thundermiracle/netlify-deploy@v3
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN}}
