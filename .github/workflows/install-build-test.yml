@@ -49,9 +49,8 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
         run: |
           mkdir -p ./pr
-          echo $PR_NUMBER > ./web/dapp/pr_number
+          echo $PR_NUMBER > ./pr/pr_number
           zip -r pull-request.zip ./web/dapp && cp pull-request.zip ./pr
-
       - uses: actions/upload-artifact@v2
         with:
           name: pr
