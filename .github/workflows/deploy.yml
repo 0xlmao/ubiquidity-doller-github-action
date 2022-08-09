@@ -18,9 +18,7 @@ jobs:
       - name: "Download artifact"
         uses: actions/download-artifact@v3
         with:
-          name:
-            description: "pr"
-            required: true
+          name: pr
       - name: Display structure of downloaded files
         run: ls
       - name: "Download artifact"
