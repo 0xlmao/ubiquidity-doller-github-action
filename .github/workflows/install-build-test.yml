@@ -1,18 +1,8 @@
-name: Install and Build Workflow for Pull Request
+name: Install and Build Workflow
 
 on:
   pull_request:
-    branches:
-      - main
-      - development
-      - staging
-      - production
   push:
-    branches:
-      - main
-      - development
-      - staging
-      - production
   create:
     tag:
       - "v*"
@@ -52,8 +42,11 @@ jobs:
 
       - name: Save PR
         env:
+          EVENT_NAME: ${{github.event_name}}
           PR_NUMBER: ${{ github.event.number }}
+          SHA: ${{github.sha}}
         run: |
+          echo $EVENT_NAME && echo $PR_NUMBER && echo $SHA
           mkdir -p ./pr
           echo $PR_NUMBER > ./pr/pr_number
           zip -r pull-request.zip ./web/dapp && cp pull-request.zip ./pr

@@ -2,7 +2,7 @@ name: Received PR and Deploy
 
 on:
   workflow_run:
-    workflows: ["Install and Build Workflow for Pull Request"]
+    workflows: ["Install and Build Workflow"]
     types:
       - completed
 
@@ -11,15 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: "Download artifact"
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v3.1.0
         with:
           script: |
-            var artifacts = await github.actions.listArtifacts({
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: ${{github.event.workflow_run.id }},
@@ -44,7 +42,7 @@ jobs:
           netlify deploy --prod > ./deployments.log
 
       - name: "Comment on PR"
-        uses: actions/github-script@v6.1.0
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
