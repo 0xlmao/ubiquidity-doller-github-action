@@ -70,6 +70,6 @@ jobs:
                 owner: ${{ github.actor }}
                 repo: ${{ github.repository }}
                 commit_sha: sha,
-                body: deployments_log,
+                body: deployments_log.toString(),
               })
             }
