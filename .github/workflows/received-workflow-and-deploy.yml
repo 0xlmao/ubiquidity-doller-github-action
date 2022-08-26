@@ -64,7 +64,7 @@ jobs:
               });
             } else {
               console.log("Commenting on the commit");
-              const github_repo = ${{ github.repository }};
+              const github_repo = '${{ github.repository }}';
               const url = `https://api.github.com/repos/${github_repo}/commits/${commit_sha}/comments`;
               console.log({url});
             }
