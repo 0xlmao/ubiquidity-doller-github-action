@@ -55,14 +55,14 @@ jobs:
             let event_name = substrs[0].split('=')[1];
             let pr_number = substrs[1].split('=')[1] ?? 0;
             let sha = substrs[2].split('=')[1];
-            let deployments_log = fs.readFileSync('./deployments.log')
+            let deployments_log = fs.readFileSync('./deployments.log').toString('utf-8');
             if (event_name == 'pull_request') {
               console.log("Commenting on the pull request");
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: pr_number,
-                body: deployments_log.toString()
+                body: deployments_log
               });
             } else {
               console.log("Commenting on the commit");
@@ -70,6 +70,6 @@ jobs:
                 owner: ${{ github.actor }}
                 repo: ${{ github.repository }}
                 commit_sha: sha,
-                body: deployments_log.toString(),
+                body: deployments_log,
               })
             }
