@@ -47,7 +47,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             let fs = require('fs');
-            let pr_info = fs.readFileSync('./pr_number');
+            let pr_info = fs.readFileSync('./pr_number').toString('utf-8');
             console.log({pr_info});
             console.log({pr_str: string(pr_info)});
             let substrs = pr_info.split(',');
