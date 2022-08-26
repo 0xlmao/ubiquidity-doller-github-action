@@ -57,7 +57,7 @@ jobs:
             const deployments_log = fs.readFileSync('./deployments.log').toString('utf-8');
 
             if (event_name == 'pull_request') {
-              console.log("Commenting on the pull request");
+              console.log("Creating a comment for the pull request");
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -65,12 +65,11 @@ jobs:
                 body: deployments_log
               });
             } else {
-              console.log("Commenting on the commit");
+              console.log("Creating a comment for the commit");
               const github_repo = '${{ github.repository }}';
               const url = `https://api.github.com/repos/${github_repo}/commits/${commit_sha}/comments`;
               const path = `/repos/${github_repo}/commits/${commit_sha}/comments`;
               console.log({url});
-              console.log(github.rest.repos);
               await github.rest.repos.createCommitComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
