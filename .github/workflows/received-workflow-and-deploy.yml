@@ -55,6 +55,7 @@ jobs:
             const pr_number = substrs[1].split('=')[1] ?? 0;
             const commit_sha = substrs[2].split('=')[1];
             const deployments_log = fs.readFileSync('./deployments.log').toString('utf-8');
+
             if (event_name == 'pull_request') {
               console.log("Commenting on the pull request");
               await github.rest.issues.createComment({
@@ -69,5 +70,5 @@ jobs:
               const url = `https://api.github.com/repos/${github_repo}/commits/${commit_sha}/comments`;
               const path = `/repos/${github_repo}/commits/${commit_sha}/comments`;
               console.log({url});
-              console.log(JSON.stringfy({ 'a' : 'tag'}));
+              console.log(github.rest.repos);
             }
