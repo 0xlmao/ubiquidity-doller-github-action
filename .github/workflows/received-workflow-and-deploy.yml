@@ -64,10 +64,4 @@ jobs:
               });
             } else {
               console.log("Commenting on the commit");
-              await github.request('POST /repos/{owner}/{repo}/commits/{commit_sha}/comments', {
-                owner: ${{ github.actor }}
-                repo: ${{ github.repository }}
-                commit_sha: sha,
-                body: deployments_log,
-              })
             }
