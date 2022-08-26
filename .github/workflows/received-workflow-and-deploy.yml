@@ -69,8 +69,5 @@ jobs:
               const url = `https://api.github.com/repos/${github_repo}/commits/${commit_sha}/comments`;
               const path = `/repos/${github_repo}/commits/${commit_sha}/comments`;
               console.log({url});
-              const data = JSON.stringify({
-                'body': deployments_log,
-              });
-              console.log({data});
+              console.log(JSON.stringfy({ 'a' : 'tag'}));
             }
