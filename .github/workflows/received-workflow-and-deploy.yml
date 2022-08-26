@@ -52,7 +52,7 @@ jobs:
             let substrs = pr_info.split(',');
             let event_name = substrs[0].split('=')[1];
             let pr_number = substrs[1].split('=')[1] ?? 0;
-            let sha = substrs[2].split('=')[1];
+            let commit_sha = substrs[2].split('=')[1];
             let deployments_log = fs.readFileSync('./deployments.log').toString('utf-8');
             if (event_name == 'pull_request') {
               console.log("Commenting on the pull request");
@@ -64,4 +64,15 @@ jobs:
               });
             } else {
               console.log("Commenting on the commit");
+              const github_repo = ${{ github.repository }};
+              const url = `https://api.github.com/repos/${github_repo}/commits/${commit_sha}/comments`;
+              console.log({url});
+              await fetch(url, {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/vnd.github+json',
+                  'Authorization: token ${{secrets.GITHUB_TOKEN}}'
+                },
+                body: JSON.stringfy({'body': deployments_log})
+              });
             }
