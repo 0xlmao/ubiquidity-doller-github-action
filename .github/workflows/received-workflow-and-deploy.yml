@@ -71,4 +71,10 @@ jobs:
               const path = `/repos/${github_repo}/commits/${commit_sha}/comments`;
               console.log({url});
               console.log(github.rest.repos);
+              await github.rest.repos.createCommitComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: commit_sha,
+                body: deployments_log
+              });
             }
