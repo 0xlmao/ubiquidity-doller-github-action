@@ -46,9 +46,9 @@ jobs:
           PR_NUMBER: ${{ github.event.number }}
           SHA: ${{github.sha}}
         run: |
-          echo $EVENT_NAME && echo $PR_NUMBER && echo $SHA
+          echo "event_name=$EVENT_NAME\npr_number=$PR_NUMBER\nsha=$SHA"
           mkdir -p ./pr
-          echo $PR_NUMBER > ./pr/pr_number
+          echo "event_name=$EVENT_NAME\npr_number=$PR_NUMBER\nsha=$SHA" > ./pr/pr_number
           zip -r pull-request.zip ./web/dapp && cp pull-request.zip ./pr
       - uses: actions/upload-artifact@v2
         with:
