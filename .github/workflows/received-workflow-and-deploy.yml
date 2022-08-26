@@ -72,33 +72,5 @@ jobs:
               const data = JSON.stringify({
                 'body': deployments_log,
               });
-              const options = {
-                'hostname' : 'api.github.com',
-                'path' : path,
-                'method' : 'POST',
-                'headers' : {
-                  'Accept': 'application/vnd.github+json',
-                  'Authorization': 'token ${{secrets.GITHUB_TOKEN}}'
-                  'Content-Length': data.length,
-                }
-              }
-              console.log({data, options});
-              const req = https.request(options, (res) => {
-                  let data = '';
-
-                  console.log('Status Code:', res.statusCode);
-
-                  res.on('data', (chunk) => {
-                      data += chunk;
-                  });
-
-                  res.on('end', () => {
-                      console.log('Body: ', JSON.parse(data));
-                  });
-              }).on("error", (err) => {
-                  console.log("Error: ", err.message);
-              });
-
-              req.write(data);
-              req.end();
+              console.log({data});
             }
