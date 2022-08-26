@@ -71,7 +71,7 @@ jobs:
                 method: 'POST',
                 headers: {
                   'Accept': 'application/vnd.github+json',
-                  'Authorization: token ${{secrets.GITHUB_TOKEN}}'
+                  'Authorization': 'token ${{secrets.GITHUB_TOKEN}}'
                 },
                 body: JSON.stringfy({'body': deployments_log})
               });
