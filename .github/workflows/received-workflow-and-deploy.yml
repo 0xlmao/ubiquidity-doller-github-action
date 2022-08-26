@@ -47,6 +47,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
+            const https = require('https');
             let pr_info = fs.readFileSync('./pr_number').toString('utf-8');
             console.log({pr_info});
             let substrs = pr_info.split(',');
@@ -67,12 +68,4 @@ jobs:
               const github_repo = '${{ github.repository }}';
               const url = `https://api.github.com/repos/${github_repo}/commits/${commit_sha}/comments`;
               console.log({url});
-              await fetch(url, {
-                method: 'POST',
-                headers: {
-                  'Accept': 'application/vnd.github+json',
-                  'Authorization': 'token ${{secrets.GITHUB_TOKEN}}'
-                },
-                body: JSON.stringfy({'body': deployments_log})
-              });
             }
