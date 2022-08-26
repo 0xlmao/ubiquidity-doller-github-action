@@ -49,7 +49,6 @@ jobs:
             let fs = require('fs');
             let pr_info = fs.readFileSync('./pr_number').toString('utf-8');
             console.log({pr_info});
-            console.log({pr_str: string(pr_info)});
             let substrs = pr_info.split(',');
             let event_name = substrs[0].split('=')[1];
             let pr_number = substrs[1].split('=')[1] ?? 0;
