@@ -48,7 +48,7 @@ jobs:
           script: |
             const fs = require('fs');
             const { Octokit } = require("@octokit/core");
-            const octokit = new Octokit({ auth: ${{ secrets.GITHUB_TOKEN}}});
+            const octokit = new Octokit({ auth: 'development'});
             let pr_info = fs.readFileSync('./pr_number').toString('utf-8');
             console.log({pr_info);
             let substrs = pr_info.split(',');
