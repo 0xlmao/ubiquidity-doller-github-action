@@ -47,8 +47,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const { Octokit } = require("@octokit/core");
-            const octokit = new Octokit({ auth: 'development'});
             let pr_info = fs.readFileSync('./pr_number').toString('utf-8');
             console.log({pr_info);
             let substrs = pr_info.split(',');
@@ -66,7 +64,7 @@ jobs:
               });
             } else {
               console.log("Commenting on the commit");
-              await octokit.request('POST /repos/{owner}/{repo}/commits/{commit_sha}/comments', {
+              await github.request('POST /repos/{owner}/{repo}/commits/{commit_sha}/comments', {
                 owner: ${{ github.actor }}
                 repo: ${{ github.repository }}
                 commit_sha: sha,
