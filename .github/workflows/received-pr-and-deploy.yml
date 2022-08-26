@@ -41,17 +41,26 @@ jobs:
           netlify link --id ${{ secrets.NETLIFY_SITE_ID_DEVELOPMENT }}
           netlify deploy --prod > ./deployments.log
 
-      - name: "Comment on PR"
+      - name: "Print Logs"
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             let fs = require('fs');
-            let issue_number = Number(fs.readFileSync('./pr_number'));
+            let pr_info = fs.readFileSync('./pr_number');
+            let substrs = pr_info.split(',');
+            let event_name = substrs[0].split('=')[1];
+            let pr_number = substrs[1].split('=')[1] ?? 0;
+            let sha = substrs[2].split('=');
             let deployments_log = fs.readFileSync('./deployments.log')
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: deployments_log.toString()
-            });
+            if (event_name = 'pull_request') {
+              console.log("Commenting on the pull request");
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number,
+                body: deployments_log.toString()
+              });
+            } else {
+              console.log("Commenting on the commit");
+            }
