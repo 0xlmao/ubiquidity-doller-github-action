@@ -46,14 +46,16 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            let fs = require('fs');
+            const fs = require('fs');
+            const { Octokit } = require("@octokit/core");
+            const octokit = new Octokit({ auth: ${{ secrets.GITHUB_TOKEN}}});
             let pr_info = fs.readFileSync('./pr_number').toString('utf-8');
             console.log({pr_info});
             let substrs = pr_info.split(',');
             let event_name = substrs[0].split('=')[1];
             let pr_number = substrs[1].split('=')[1] ?? 0;
             let sha = substrs[2].split('=')[1];
-            let deployments_log = fs.readFileSync('./deployments.log');
+            let deployments_log = fs.readFileSync('./deployments.log')
             if (event_name == 'pull_request') {
               console.log("Commenting on the pull request");
               await github.rest.issues.createComment({
@@ -64,4 +66,10 @@ jobs:
               });
             } else {
               console.log("Commenting on the commit");
+              await octokit.request('POST /repos/{owner}/{repo}/commits/{commit_sha}/comments', {
+                owner: ${{ github.actor }}
+                repo: ${{ github.repository }}
+                commit_sha: sha,
+                body: deployments_log.toString(),
+              })
             }
