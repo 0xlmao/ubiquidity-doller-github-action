@@ -13,11 +13,14 @@ jobs:
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: "Download artifact"
         uses: actions/github-script@v3.1.0
         with:
           script: |
-            const download_artifact = require('./download_artifact.js');
+            const download_artifact = require('${{ github.workspace }}/bin/download_artifact.js');
             download_artifact(github, context)
       - name: Extract files
         run: unzip pr.zip && unzip pull-request.zip && ls
@@ -32,5 +35,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const print_deployments_log = require('./print_deployments_logs.js');
+            const print_deployments_log = require('${{github.workspace}}/bin/print_deployments_logs.js');
             await print_deployments_log(github, context);
