@@ -1,5 +1,4 @@
-module.exports = async ({ github, context }) => {
-  const fs = require("fs");
+module.exports = async ({ github, context, fs }) => {
   const pr_info = fs.readFileSync("./pr_number").toString("utf-8");
   console.log({ pr_info });
   const substrs = pr_info.split(",");
