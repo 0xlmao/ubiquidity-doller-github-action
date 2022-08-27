@@ -1,7 +1,6 @@
-module.exports = async ({ github, context }) => {
-  console.log("download_artifact");
+module.exports = async ({ github, context, fs }) => {
+  console.log("download_artifact.....");
   console.log({ github, context });
-  const fs = require("fs");
   const artifacts = await github.actions.listWorkflowRunArtifacts({
     owner: context.repo.owner,
     repo: context.repo.repo,
