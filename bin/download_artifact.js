@@ -1,4 +1,4 @@
-export default function download_artifact(github, context) {
+module.exports = (github, context) => {
     const fs = require('fs');
     const artifacts = await github.actions.listWorkflowRunArtifacts({
         owner: context.repo.owner,

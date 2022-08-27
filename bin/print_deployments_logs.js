@@ -1,4 +1,4 @@
-export default function print_deployments_logs(github, context) {
+module.exports = (github, context) => {
     const fs = require('fs');
     const pr_info = fs.readFileSync('./pr_number').toString('utf-8');
     console.log({pr_info});
