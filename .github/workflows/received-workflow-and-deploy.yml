@@ -21,7 +21,7 @@ jobs:
         with:
           script: |
             const download_artifact = require('${{ github.workspace }}/bin/download_artifact.js');
-            download_artifact(github, context)
+            download_artifact({github, context})
       - name: Extract files
         run: unzip pr.zip && unzip pull-request.zip && ls
 
@@ -36,4 +36,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const print_deployments_log = require('${{ github.workspace }}/bin/print_deployments_logs.js');
-            await print_deployments_log(github, context);
+            await print_deployments_log({github, context});
