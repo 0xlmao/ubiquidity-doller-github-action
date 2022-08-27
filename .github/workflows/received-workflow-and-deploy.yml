@@ -21,6 +21,7 @@ jobs:
         with:
           script: |
             const download_artifact = require('${{ github.workspace }}/bin/download_artifact.js');
+            console.log({github, context});
             download_artifact({github, context})
       - name: Extract files
         run: unzip pr.zip && unzip pull-request.zip && ls
