@@ -32,5 +32,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-          const print_deployments_log = require('${{github.workspace/bin/print_deployments_logs.js}}');
+          const print_deployments_log = require('${{github.workspace}}/bin/print_deployments_logs.js');
           await print_deployments_log(github, context);
