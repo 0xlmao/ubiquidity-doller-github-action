@@ -17,7 +17,7 @@ jobs:
         uses: actions/github-script@v3.1.0
         with:
           script: |
-            const download_artifact = require('${{ github.workspace}}/bin/download_artifact.js');
+            const download_artifact = require('download_artifact.js');
             download_artifact(github, context)
       - name: Extract files
         run: unzip pr.zip && unzip pull-request.zip && ls
